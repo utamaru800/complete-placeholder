@@ -14,7 +14,7 @@ $.fn.placeholder = function(options)
 				'set_class'  	: true,
 				'class_name' 	: 'placeholder',
 				'skip'  		: false,
-				'ie_submit_swap' : false, // If fallback validation isn't working in IE try setting to true.
+				'ie_submit_swap' : true, // If fallback validation isn't working in IE try setting to true.
 				'ie_password_callback' : '' // Provide callback function for custom ie password submit validation. Another IE fallback validation workaround.
 				
 		}
@@ -156,7 +156,7 @@ $.fn.placeholder = function(options)
 					});
 					
 								// Swap back the textfield on submit and put value there
-								if(msie && submit_swap) $('[passwordcache]').each(function(){
+								if(msie) $('[passwordcache]').each(function(){
 									if(alt_objects[this.name])
 									{
 										if((callback && !eval(callback+'(this.value)')))
@@ -165,6 +165,8 @@ $.fn.placeholder = function(options)
 										{
 											if(this.value == '' )
 												$(alt_objects[this.name]).val('')
+											else
+												$(alt_objects[this.name]).val(this.value)
 											$(alt_objects[this.name]).focus(function(){swap_to_password(this)}).blur(function(){swap_to_text(this)})
 											this.parentNode.replaceChild(alt_objects[this.name],this)
 										}
